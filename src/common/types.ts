@@ -19,7 +19,6 @@ export interface User {
 
   export interface Comment {
     id: number;
-    user_id: number;
     title: string;
     body: string;
   }

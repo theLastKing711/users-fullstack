@@ -55,6 +55,10 @@ const StyledContainer = styled.div`
       button {
         padding: 0.5rem 4rem;
       }
+
+      .back-button {
+        flex: 1;
+      }
     }
 
     border-top: 1px solid black;
@@ -100,9 +104,14 @@ const validate = (values: UserResponse): {} => {
 interface Props {
   userDetails: UserResponse;
   handleSubmit: (newUser: User) => void;
+  isUpdateForm?: boolean;
 }
 
-const UserDetailsForm: React.FC<Props> = ({ userDetails, handleSubmit }) => {
+const UserDetailsForm: React.FC<Props> = ({
+  userDetails,
+  handleSubmit,
+  isUpdateForm,
+}) => {
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     let name: string = e.target.name;
     let value: string = e.target.value;
@@ -212,10 +221,14 @@ const UserDetailsForm: React.FC<Props> = ({ userDetails, handleSubmit }) => {
           <footer>
             <div className="footer-actions">
               <Button variant="contained" color="primary" type="submit">
-                Update
+                {isUpdateForm ? "Update" : "submit"}
               </Button>
               <Link to="/users">
-                <Button variant="contained" color="error">
+                <Button
+                  variant="contained"
+                  color="error"
+                  className="back-button"
+                >
                   back
                 </Button>
               </Link>

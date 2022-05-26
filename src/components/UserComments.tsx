@@ -1,11 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import { Comment, UserWithComments } from "../common/types";
-
-interface Props {
-  userWithComments: UserWithComments;
-  handleDeleteComment: (id: number) => void;
-}
+import AddComment from "./AddComment";
 
 const StyledComments = styled.ul`
   list-style: none;
@@ -46,9 +42,16 @@ const StyledComments = styled.ul`
   }
 `;
 
+interface Props {
+  userWithComments: UserWithComments;
+  handleDeleteComment: (id: number) => void;
+  handleAddComment: (comment: Comment) => void;
+}
+
 const UserComments: React.FC<Props> = ({
   userWithComments,
   handleDeleteComment,
+  handleAddComment,
 }) => {
   return (
     <div>

@@ -1,5 +1,5 @@
 import { deleteData, fetchData, postData, updateData } from './userApi';
-import { User, UserResponse, UserWithComments } from './../../common/types';
+import { Comment, User, UserResponse, UserWithComments } from './../../common/types';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RootState, AppThunk } from '../../app/store';
 
@@ -99,6 +99,17 @@ export const deleteUserComment = createAsyncThunk(
   }
 )
 
+export const addUserComment = createAsyncThunk(
+  'user/addUserComment',
+  async (payload: {comment: Comment, id: number | undefined}) => {
+      const response = postData<Comment, Comment>(`customers/${payload.id}/comments`, payload.comment)
+
+      console.log("response", response)
+
+      return response;
+  }
+)
+
 export const userSlice = createSlice({
   name: 'user',
   initialState,
@@ -192,6 +203,26 @@ export const userSlice = createSlice({
         state.userWithComments = newUsercomments
       })
       .addCase(deleteUserComment.rejected, (state) => {
+        state.isLoading = false;
+      })
+
+      builder.addCase(addUserComment.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(addUserComment.fulfilled, (state, action) => {
+        state.isLoading = false;
+
+        console.log("gg")
+
+        let newComment: Comment = {...action.payload}
+
+        let newUsercomments: UserWithComments = {...state.userWithComments, comments: [...state.userWithComments.comments,  {...action.payload} ]}
+
+        console.log("newUserComments", newUsercomments)
+
+        state.userWithComments = newUsercomments
+      })
+      .addCase(addUserComment.rejected, (state) => {
         state.isLoading = false;
       })
       

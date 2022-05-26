@@ -3,13 +3,14 @@ import { Container, flexbox } from "@mui/system";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import styled from "styled-components";
 import { AiOutlineUser } from "react-icons/ai";
-import { User, UserResponse, UserWithComments } from "../common/types";
+import { Comment, User, UserResponse, UserWithComments } from "../common/types";
 import { useFormik } from "formik";
 import { postData, updateData, useFetch } from "../features/user/userApi";
 import { toast } from "react-toastify";
 import { Link, useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
+  addUserComment,
   deleteUserComment,
   fetchUserById,
   isLoading,
@@ -20,6 +21,7 @@ import {
 import UserDetailsForm from "../components/UserDetailsForm";
 import Loading from "./Loading";
 import UserComments from "../components/UserComments";
+import AddComment from "../components/AddComment";
 
 const UserDetails = () => {
   const dispatch = useAppDispatch();
@@ -41,6 +43,14 @@ const UserDetails = () => {
     });
   };
 
+  const handleAddComment = (comment: Comment): void => {
+    let newId: number | undefined = parseInt(id || "1");
+
+    dispatch(addUserComment({ comment, id: newId })).then((item) => {
+      toast("comment added successfully");
+    });
+  };
+
   useEffect(() => {
     dispatch(fetchUserById(id));
   }, []);
@@ -51,11 +61,17 @@ const UserDetails = () => {
 
   return (
     <div>
-      <UserDetailsForm handleSubmit={handleSubmit} userDetails={userDetails} />
+      <UserDetailsForm
+        handleSubmit={handleSubmit}
+        userDetails={userDetails}
+        isUpdateForm={true}
+      />
       <UserComments
         userWithComments={userDetails}
         handleDeleteComment={handleDeleteComment}
+        handleAddComment={handleAddComment}
       />
+      <AddComment handleAddComment={handleAddComment} />
     </div>
   );
 };
