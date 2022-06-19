@@ -1,13 +1,10 @@
-import { Button, Grid, Paper, TextField, Typography } from "@mui/material";
-import { Container, flexbox } from "@mui/system";
-import React, { ChangeEvent, useEffect, useState } from "react";
-import styled from "styled-components";
-import { AiOutlineUser } from "react-icons/ai";
-import { Comment, User, UserResponse, UserWithComments } from "../common/types";
-import { useFormik } from "formik";
-import { postData, updateData, useFetch } from "../features/user/userApi";
+import { flexbox } from "@mui/system";
+import React, { useEffect } from "react";
+
+import { Comment, User, UserWithComments } from "../common/types";
+
 import { toast } from "react-toastify";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import {
   addUserComment,
@@ -15,7 +12,6 @@ import {
   fetchUserById,
   isLoading,
   updateUser,
-  user,
   userWithComments,
 } from "../features/user/userSlice";
 import UserDetailsForm from "../components/UserDetailsForm";
@@ -51,6 +47,10 @@ const UserDetails = () => {
     });
   };
 
+  const handleClose = (valeu: string) => {
+    console.log(valeu);
+  };
+
   useEffect(() => {
     dispatch(fetchUserById(id));
   }, []);
@@ -65,6 +65,7 @@ const UserDetails = () => {
         handleSubmit={handleSubmit}
         userDetails={userDetails}
         isUpdateForm={true}
+        onClose={handleClose}
       />
       <UserComments
         userWithComments={userDetails}

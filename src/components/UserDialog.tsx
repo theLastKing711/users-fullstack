@@ -41,14 +41,14 @@ function SimpleDialog(props: SimpleDialogProps) {
     onClose(selectedValue);
   };
 
-  const handleListItemClick = (value: string) => {
-    onClose(value);
-  };
-
   return (
     <Dialog onClose={handleClose} open={open}>
       <DialogTitle>Add new user</DialogTitle>
-      <UserDetailsForm handleSubmit={handleSubmit} userDetails={initialUser} />
+      <UserDetailsForm
+        handleSubmit={handleSubmit}
+        userDetails={initialUser}
+        onClose={onClose}
+      />
     </Dialog>
   );
 }
@@ -72,9 +72,6 @@ export default function UserDialog({ handleSubmit }: UserDialogProps) {
 
   return (
     <div>
-      <Typography variant="subtitle1" component="div">
-        Selected: {selectedValue}
-      </Typography>
       <br />
       <Button variant="outlined" onClick={handleClickOpen}>
         add new user

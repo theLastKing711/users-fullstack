@@ -23,11 +23,6 @@ const StyledContainer = styled.div`
     .MuiFormControl-root {
       border-radius: 4px;
       width: 100%;
-      /* background-color: green;
-    color: blue;
-    label {
-      color: blue;
-    } */
 
       .MuiOutlinedInput-input {
         /* color: yellow; */
@@ -72,9 +67,6 @@ const initaleUserState: UserResponse = {
   password: "",
   created_at: "",
   updated_at: "",
-  // phonenumber: "",
-  // street: "",
-  // address: "",
 };
 
 const validate = (values: UserResponse): {} => {
@@ -105,24 +97,15 @@ interface Props {
   userDetails: UserResponse;
   handleSubmit: (newUser: User) => void;
   isUpdateForm?: boolean;
+  onClose: (value: string) => void;
 }
 
 const UserDetailsForm: React.FC<Props> = ({
   userDetails,
   handleSubmit,
   isUpdateForm,
+  onClose,
 }) => {
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
-    let name: string = e.target.name;
-    let value: string = e.target.value;
-
-    // let newUser: User = { ...user, [name]: value };
-
-    // setUser(newUser);
-  };
-
-  // const [users, isLoading, error] = usePost < User, UserResponse >('customers', newuser);
-
   const formik = useFormik({
     initialValues: userDetails || initaleUserState,
     validate,
@@ -131,13 +114,10 @@ const UserDetailsForm: React.FC<Props> = ({
       const newuser: User = { ...values };
 
       handleSubmit(newuser);
-      //   updateData<User, UserResponse>(`customers/${id}`, newuser).then((res) => {
-      //     // setUser(res);
-      //     toast("user updated successfully");
-      //   });
-      // alert(JSON.stringify(values, null, 2));
     },
   });
+
+  const close = (vale: string) => {};
 
   return (
     <StyledContainer>
@@ -228,6 +208,7 @@ const UserDetailsForm: React.FC<Props> = ({
                   variant="contained"
                   color="error"
                   className="back-button"
+                  onClick={() => onClose("true")}
                 >
                   back
                 </Button>

@@ -1,7 +1,5 @@
 import {
-  Button,
   IconButton,
-  Pagination,
   Paper,
   Table,
   TableBody,
@@ -10,16 +8,15 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { AiFillEye } from "react-icons/ai";
 import { FaTrashAlt } from "react-icons/fa";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import styled from "styled-components";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
-import { User, UserResponse } from "../common/types";
-import ControllerPagination from "../components/ControllerPagination";
+import { User } from "../common/types";
+
 import ControllerTablePagination from "../components/ControllerTablePagination";
 import UserDialog from "../components/UserDialog";
 import {
@@ -35,19 +32,8 @@ import {
   filterdUsers,
 } from "../features/user/userSlice";
 import Loading from "./Loading";
-// import Loading from "../components/Loading";
-// import SimpleDialogDemo from "../components/SimpleDailog";
-// import { deleteData, useFetch } from "../features/user/userAPI";
-
-const StyledPagination = styled.div`
-  display: flex;
-  justify-content: center;
-`;
 
 const Users = () => {
-  // const [page, setPage] = useState<number>(0);
-  // const [rowsPerPage, setRowsPerPage] = useState<number>(3);
-
   const dispatch = useAppDispatch();
   const usersList = useAppSelector(users);
   const usersFiltered = useAppSelector(filterdUsers);
@@ -70,7 +56,6 @@ const Users = () => {
     event: React.MouseEvent<HTMLButtonElement, MouseEvent> | null,
     page: number
   ) => {
-    // setPage(page);
     dispatch(updateUsersPagination(page));
   };
 
@@ -83,25 +68,12 @@ const Users = () => {
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     dispatch(UpdateUsersRowsPerPage(event.target.value));
-    // setRowsPerPage(parseInt(event.target.value));
-    // setPage(0);
   };
 
   useEffect(() => {
     dispatch(fetchUsers());
     console.log("users", usersList);
   }, []);
-
-  // const filterUsers = (): UserResponse[] => {
-  //   let filterdUsers: UserResponse[] = [];
-
-  //   let startIndex = (page + 1) * rowsPerPage - rowsPerPage;
-  //   let endIndex = (page + 1) * rowsPerPage;
-
-  //   filterdUsers = usersList.slice(startIndex, endIndex);
-
-  //   return filterdUsers;
-  // };
 
   if (loading) {
     return <Loading />;

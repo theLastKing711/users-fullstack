@@ -8,7 +8,7 @@ const StyledNavbar = styled.nav`
   background-color: green;
   display: flex;
   align-items: center;
-  justify-content: space-around;
+  justify-content: center;
 
   margin-bottom: 3rem;
 
@@ -40,6 +40,7 @@ const StyledNavbar = styled.nav`
     width: 100%;
     list-style: none;
     display: flex;
+    justify-content: center;
     align-items: center;
     gap: 1.5rem;
 
@@ -74,9 +75,7 @@ const Navbar = () => {
 
   return (
     <StyledNavbar>
-      <div className="logo">logo</div>
       <ul className="page-routes">{pagesLinks}</ul>
-      <div className="random-item">random item</div>
     </StyledNavbar>
   );
 };
